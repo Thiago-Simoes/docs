@@ -1,98 +1,97 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Introdução"
+description: "Comece a usar nossas APIs em poucos minutos."
 ---
 
-## Setting up
+## Autenticação
 
-Get your documentation site up and running in minutes.
-Ok
+Todas as consultas \*\*exigem \*\*autenticação por API Token. Para obter o seu, entre em contato por email.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+Todas as consultas devem incluir um **\_header \_**de "**Authorization**" com o valor "**Bearer SEU_TOKEN_AQUI**".
 
-## Make it yours
+## Sintaxe de Consulta
 
-Design a docs site that looks great and empowers your users.
+Nossas séries temporais são consolidadas de forma a possuir endpoints específicos, cada um com seus parâmetros. Entretanto, possuímos uma rota focada em disponibilizar todas as séries de forma centralizada, que deve ser consultada usando uma sintaxe padronizada.
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+### Estrutura da API centralizada
 
-## Create beautiful pages
+<Info>
+  [**http://orion.thiago-simoes.com/api/v1/series/:identificador**](http://orion.thiago-simoes.com/api/v1/series/:identificador)
+</Info>
 
-Everything you need to create world-class documentation.
+### Identificação da Série
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+As séries são identificadas por um identificador compos por três partes:
 
-## Need inspiration?
+1. **Fonte primária dos dados**
+2. **Base de dados**
+3. **Série**
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+**_O identificador é a concatenação desses campos.Importante: apenas a identificação única da série é case-sensitive._**
+
+**Exemplo**
+
+<Check>
+  \*\*BCB_SGS_12 \*\*
+
+  \
+  **Fonte:** Banco Central do Brasil
+
+  **Base de Dados:** SGS
+
+  **Série:** 12 - "Taxa de juros - CDI"
+
+  \
+  \
+  **ANBIMA_CARTEIRAS-TEORICAS_IMA-B**
+
+  **Fonte**: Anbima
+
+  **Base de Dados**: Carteiras Teóricas
+
+  **Série**: IMA-B
+</Check>
+
+<Danger>
+  **SGS_12**
+
+  **Fonte**: ?
+
+  **Base de Dados**: SGS
+
+  **Série**: 12 - "Taxa de juros - CDI"
+
+  \
+  **ANBIMA_IMA-B**
+
+  **Fonte**: ?
+
+  **Base de Dados**: Anbima
+
+  **Série**: 12 - "Taxa de juros - CDI"
+</Danger>
+
+## Parâmetros
+
+- **dataInicial**\
+  **nome**    : data inicial\
+  **formato**    : _dd-mm-yyyy_\
+  **explicação**: a data inicial dos retornos\
+  **obrigatório**: não
+- **dataFinal**\
+  **nome**    : data final\
+  **formato**    : _dd-mm-yyyy_\
+  **explicação**: a data final dos retornos\
+  **obrigatório**: não
+- **colunas**\
+  **nome**    : colunas selecionadas\
+  **formato**    : _col1,col2,col3_\
+  **explicação**: lista de colunas a serem retornadas\
+  **obrigatório**: não
+- **colunasExcluir**\
+  **nome**    : colunas a serem excluídas\
+  **formato**    : _col1,col2,col3_\
+  **explicação**: lista de colunas a serem excluídas\
+  **obrigatório**: não
+
+**Importante:** consultas sem os parâmetros retornarão todas as colunas, no intervalo padrão de tempo (2 anos).
